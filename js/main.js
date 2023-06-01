@@ -241,9 +241,16 @@ let elSelectYear = document.querySelector('.select__year')
 let elSelectRating = document.querySelector('.select__rating')
 var elSearchForm = document.querySelector('.search__form')
 var elSearchInp = document.querySelector('.search__inp')
+let elPagList = document.querySelector(".pagenation__list")
+let elPagBtns = document.querySelectorAll('.pag__btn')
 
-const partMove = movies.splice(0, 1000)
 const Categories = []
+const newMovies = movies.map((item, index)=>{
+   item.id = index
+   return item
+})
+console.log(newMovies);
+let partMove = newMovies.slice(0, 20)
 partMove.forEach((item) => {
    if (Categories.includes(item.Categories) == false) {
       Categories.push(item.Categories)
@@ -279,12 +286,13 @@ elSelectRating.addEventListener('change', (e) => {
 })
 function movieMepper(data) {
    elMovieList.innerHTML = ''
-   data.forEach((item) => {
+   data.forEach((item, index)=>{
       let newLi = document.createElement('li')
-      newLi.innerHTML = `
+      newLi.innerHTML =`
    <div class="card" style="width: 18rem;">
    <img src="https://i.ytimg.com/vi/${item.ytid}/hqdefault.jpg" class="card-img-top" alt="...">
    <div class="card-body">
+     <h1 class="card-title">${item.id}</h1>
      <h5 class="card-title">${item.Title}</h5>
      <p class="card-text">${item.imdb_rating}</p>
      <p class="card-text">${item.runtime}-time</p>
@@ -294,9 +302,8 @@ function movieMepper(data) {
      <a href="https://www.youtube.com/watch?v=${item.ytid}" target="_blanck" class="btn btn-primary">Watch</a>
    </div>
  </div>`
-
       elMovieList.appendChild(newLi)
-   });
+   })
 }
 movieMepper(partMove)
 
@@ -305,3 +312,18 @@ elSearchForm.addEventListener('submit', (e)=>{
    const searchData = partMove.filter((item)=> item.Title.toString().toLowerCase().includes(elSearchInp.value.toLowerCase()) == true)
    movieMepper(searchData);
 })
+
+
+
+
+
+
+elPagBtns.forEach((btnItem) =>{
+   btnItem.addEventListener( 'click',(e)=>{
+      console.log(e.target.textContent);
+      movieMepper(newMovies.slice(e.target.textContent * 10, e.target.textContent * 10 + 20))
+      console.log(newMovies.slice(e.target.textContent * 10, e.target.textContent * 10 + 20));
+   })
+})
+
+// https://wonderfull-cinema.netlify.app
