@@ -313,11 +313,6 @@ elSearchForm.addEventListener('submit', (e)=>{
    movieMepper(searchData);
 })
 
-
-
-
-
-
 elPagBtns.forEach((btnItem) =>{
    btnItem.addEventListener( 'click',(e)=>{
       console.log(e.target.textContent);
@@ -325,5 +320,3 @@ elPagBtns.forEach((btnItem) =>{
       console.log(newMovies.slice(e.target.textContent * 10, e.target.textContent * 10 + 20));
    })
 })
-
-// https://wonderfull-cinema.netlify.app
